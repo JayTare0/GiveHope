@@ -66,7 +66,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
   const fetchStats = async () => {
     try {
       const r = await fetch('/api/ngo/stats', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setStats(data);
@@ -78,7 +78,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
   const fetchNeeds = async () => {
     try {
       const r = await fetch('/api/ngo/needs', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setNeeds(data);
@@ -90,7 +90,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
   const fetchPledges = async () => {
     try {
       const r = await fetch('/api/ngo/pledges', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setPledges(data);
@@ -102,7 +102,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
   const fetchUpdates = async () => {
     try {
       const r = await fetch('/api/ngo/updates', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setUpdates(data);
@@ -177,7 +177,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
         method,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify({
           title: needTitle.trim(),
@@ -207,7 +207,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
     try {
       const response = await fetch(`/api/ngo/needs/${needId}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (!response.ok) {
@@ -232,7 +232,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify({ text: updateText.trim() })
       });
@@ -265,7 +265,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify({
           name: schoolName.trim(),
@@ -306,7 +306,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
     try {
       const response = await fetch('/api/ngo/location', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}` },
         body: JSON.stringify({ address: deliveryAddress, ...schoolLocation })
       });
       const data = await response.json();
@@ -322,7 +322,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
     try {
       const response = await fetch(`/api/ngo/pledges/${pledgeId}/request-pickup`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (!response.ok) {
@@ -339,7 +339,7 @@ export default function NgoDashboard({ currentUser, onLogout, addToast }: NgoDas
   const openVolunteerLocation = async (pledgeId: number) => {
     try {
       const response = await fetch(`/api/ngo/pledges/${pledgeId}/delivery-location`, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const location = await response.json();
       if (!response.ok || location.latitude == null || location.longitude == null) {

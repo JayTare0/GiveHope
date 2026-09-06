@@ -16,7 +16,7 @@ export default function App() {
   const [activeSchoolId, setActiveSchoolId] = useState<number | null>(null);
 
   // Auth States
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [token, setToken] = useState<string | null>(sessionStorage.getItem('token'));
   const [currentUser, setCurrentUser] = useState<any | null>(null);
 
   // Public Directory Data
@@ -40,14 +40,14 @@ export default function App() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  // Restore session from localStorage
+  // Restore session from sessionStorage
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
       try {
         setCurrentUser(JSON.parse(storedUser));
       } catch (e) {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
       }
     }
   }, []);
@@ -77,16 +77,16 @@ export default function App() {
   }, [screen]);
 
   const handleLoginSuccess = (newToken: string, user: any) => {
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('token', newToken);
+    sessionStorage.setItem('user', JSON.stringify(user));
     setToken(newToken);
     setCurrentUser(user);
     setScreen('dashboard');
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     setToken(null);
     setCurrentUser(null);
     addToast('You have been logged out successfully.', 'info');
@@ -96,8 +96,8 @@ export default function App() {
   // Redirect users when a protected request reports an invalid or expired JWT.
   useEffect(() => {
     const handleSessionExpired = () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
       setToken(null);
       setCurrentUser(null);
       setScreen('login');

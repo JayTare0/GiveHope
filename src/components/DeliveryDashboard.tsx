@@ -22,7 +22,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
   const fetchQueue = async () => {
     try {
       const r = await fetch('/api/delivery/queue', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setQueue(data);
@@ -34,7 +34,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
   const fetchActiveDeliveries = async () => {
     try {
       const r = await fetch('/api/delivery/my-deliveries', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setActiveDeliveries(data);
@@ -46,7 +46,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
   const fetchCompletedDeliveries = async () => {
     try {
       const r = await fetch('/api/delivery/completed', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setCompletedDeliveries(data);
@@ -72,7 +72,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
     const watchId = navigator.geolocation.watchPosition(async (position) => {
       await Promise.all(activeDeliveries.map((delivery) => fetch(`/api/delivery/pledges/${delivery.pledge_id}/location`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionStorage.getItem('token')}` },
         body: JSON.stringify({ latitude: position.coords.latitude, longitude: position.coords.longitude })
       })));
     }, () => addToast('Location sharing is off. Allow location access to share delivery progress.', 'info'), {
@@ -93,7 +93,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
     try {
       const response = await fetch(`/api/delivery/pledges/${pledgeId}/claim`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (!response.ok) {
@@ -112,7 +112,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
     try {
       const response = await fetch(`/api/delivery/pledges/${pledgeId}/collect`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (!response.ok) {
@@ -130,7 +130,7 @@ export default function DeliveryDashboard({ currentUser, onLogout, addToast }: D
     try {
       const response = await fetch(`/api/delivery/pledges/${pledgeId}/deliver`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (!response.ok) {

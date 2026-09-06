@@ -25,7 +25,7 @@ export default function AdminDashboard({ currentUser, onLogout, addToast }: Admi
   const fetchStats = async () => {
     try {
       const r = await fetch('/api/admin/stats', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setStats(data);
@@ -37,7 +37,7 @@ export default function AdminDashboard({ currentUser, onLogout, addToast }: Admi
   const fetchSchools = async () => {
     try {
       const r = await fetch('/api/admin/schools', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setSchools(data);
@@ -49,7 +49,7 @@ export default function AdminDashboard({ currentUser, onLogout, addToast }: Admi
   const fetchDeliveries = async () => {
     try {
       const r = await fetch('/api/admin/deliveries', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await r.json();
       if (r.ok) setDeliveries(data);
@@ -74,7 +74,7 @@ export default function AdminDashboard({ currentUser, onLogout, addToast }: Admi
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify({ status: newStatus })
       });

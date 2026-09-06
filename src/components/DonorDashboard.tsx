@@ -18,7 +18,7 @@ export default function DonorDashboard({ currentUser, onLogout, addToast }: Dono
     setLoading(true);
     try {
       const response = await fetch('/api/donor/pledges', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (response.ok) {
@@ -41,7 +41,7 @@ export default function DonorDashboard({ currentUser, onLogout, addToast }: Dono
     try {
       const response = await fetch(`/api/donor/pledges/${pledgeId}/ready`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const data = await response.json();
       if (!response.ok) {
@@ -58,7 +58,7 @@ export default function DonorDashboard({ currentUser, onLogout, addToast }: Dono
   const openVolunteerLocation = async (pledgeId: number) => {
     try {
       const response = await fetch(`/api/donor/pledges/${pledgeId}/delivery-location`, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
       });
       const location = await response.json();
       if (!response.ok || location.latitude == null || location.longitude == null) {
