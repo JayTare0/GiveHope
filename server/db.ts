@@ -1,8 +1,19 @@
 import sqlite3 from 'sqlite3';
 import bcrypt from 'bcryptjs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const dbPath = path.resolve(process.cwd(), 'database.db');
+// Resolve the database path safely for both ESM (development) and CJS (production bundle)
+let currentDir;
+if (typeof __dirname !== 'undefined') {
+  currentDir = __dirname;
+} else if (typeof import.meta !== 'undefined' && import.meta.url) {
+  currentDir = path.dirname(fileURLToPath(import.meta.url));
+} else {
+  currentDir = process.cwd(); // Fallback
+}
+
+const dbPath = path.resolve(currentDir, '..', 'database.db');
 const db = new sqlite3.Database(dbPath);
 
 // Helper for database queries
