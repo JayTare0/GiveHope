@@ -15,7 +15,7 @@ export default function App() {
   const [screen, setScreen] = useState<'landing' | 'school-profile' | 'login' | 'register' | 'dashboard'>('landing');
   const [activeSchoolId, setActiveSchoolId] = useState<number | null>(null);
 
-  // Auth States
+  // Auth StatesS
   const [token, setToken] = useState<string | null>(sessionStorage.getItem('token'));
   const [currentUser, setCurrentUser] = useState<any | null>(null);
 

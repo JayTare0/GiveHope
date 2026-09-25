@@ -812,7 +812,7 @@ async function startServer() {
     const pledgeId = parseInt(req.params.id);
     const { latitude, longitude } = req.body;
     if (isNaN(pledgeId) || !validCoordinates(latitude, longitude)) return res.status(400).json({ error: 'Valid coordinates are required.' });
-    const delivery = await dbGet('SELECT id FROM deliveries WHERE pledge_id = ? AND volunteer_id = ? AND status != "delivered"', [pledgeId, req.user!.id]);
+    const delivery = await dbGet("SELECT id FROM deliveries WHERE pledge_id = ? AND volunteer_id = ? AND status != 'delivered'", [pledgeId, req.user!.id]);
     if (!delivery) return res.status(404).json({ error: 'Active delivery not found.' });
     await dbRun('UPDATE deliveries SET volunteer_latitude = ?, volunteer_longitude = ?, location_updated_at = CURRENT_TIMESTAMP WHERE pledge_id = ?', [latitude, longitude, pledgeId]);
     res.json({ success: true });
@@ -846,8 +846,8 @@ async function startServer() {
         return res.status(404).json({ error: 'Delivery record not found or not claimed by you' });
       }
 
-      await dbRun('UPDATE deliveries SET status = "collected", collected_at = CURRENT_TIMESTAMP WHERE pledge_id = ?', [pledgeId]);
-      await dbRun('UPDATE pledges SET status = "collected" WHERE id = ?', [pledgeId]);
+      await dbRun("UPDATE deliveries SET status = 'collected', collected_at = CURRENT_TIMESTAMP WHERE pledge_id = ?", [pledgeId]);
+      await dbRun("UPDATE pledges SET status = 'collected' WHERE id = ?", [pledgeId]);
 
       res.json({ success: true, pledgeId, status: 'collected' });
     } catch (err) {
@@ -866,8 +866,8 @@ async function startServer() {
         return res.status(404).json({ error: 'Delivery record not found or not claimed by you' });
       }
 
-      await dbRun('UPDATE deliveries SET status = "delivered", delivered_at = CURRENT_TIMESTAMP WHERE pledge_id = ?', [pledgeId]);
-      await dbRun('UPDATE pledges SET status = "delivered" WHERE id = ?', [pledgeId]);
+      await dbRun("UPDATE deliveries SET status = 'delivered', delivered_at = CURRENT_TIMESTAMP WHERE pledge_id = ?", [pledgeId]);
+      await dbRun("UPDATE pledges SET status = 'delivered' WHERE id = ?", [pledgeId]);
 
       res.json({ success: true, pledgeId, status: 'delivered' });
     } catch (err) {
